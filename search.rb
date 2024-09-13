@@ -8,27 +8,35 @@
 # ruby search.rb
 
   
-def search(str, dictionary)
+def search(str, dictionary)    
     m = []
-    copy_str = String.new(str)
 
-    find = lambda do |str, world|
-        if str.slice!(world) == nil
-            # do nothing
-        else
-            m << world
-            find.call(str,world)
+    dictionary.each do |word|
+        str.scan(word).each do |substring|
+            m.push(substring)
         end
     end
-    
-    dictionary.each do |word|
-        find.call(str, word)
-    end
-    
+
     puts "Строку можно представить #{m.join(' ').inspect} ?"
 
-    m.join().length == copy_str.length
-end    
+    m.join().length >= str.length
+end 
+
+str = 'двадесяткадв'
+dictionary = ['два', 'дв', 'десятка', 'тысячи', 'a']
+puts "Строка: '#{str}'"
+puts "Словарь: #{dictionary}"
+puts search(str, dictionary)
+puts "-----------"
+puts "\n"
+
+str = 'двадесяткадва'
+dictionary = ['два', 'дв', 'ва', 'десятка', 'тысячи']
+puts "Строка: '#{str}'"
+puts "Словарь: #{dictionary}"
+puts search(str, dictionary)
+puts "-----------"
+puts "\n"
 
 str = 'двадесяткадва'
 dictionary = ['два', 'дв', 'ва', 'десятка', 'тысячи']
