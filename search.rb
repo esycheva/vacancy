@@ -15,15 +15,24 @@ def search(str, dictionary)
     m = []
     i = 0
 
-    while i < dictionary.length && m.join().length < str.length
-        if str.include?(dictionary[i])
-            m.push(dictionary[i])
-        end
+    while i < dictionary.length
+        str.scan(dictionary[i]).each do |substring|
+            m.push(substring)
+        end    
         i += 1    
     end
     puts "Строку можно представить #{m.join(' ').inspect} ?"
     m.join().length == str.length
 end
+
+str = 'двадесяткадва'
+dictionary = ['два', 'десятка', 'тысячи']
+puts "Строка: '#{str}'"
+puts "Словарь: #{dictionary}"
+puts search(str, dictionary)
+puts "-----------"
+puts "\n"
+
 
 str = 'двесотни'
 dictionary = ['две', 'сотни', 'тысячи']
