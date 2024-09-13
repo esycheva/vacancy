@@ -7,23 +7,36 @@
 
 # ruby search.rb
 
-
-str = 'беспорядок'
-dictionary = ['море', 'роса', 'порядок',  'дым', 'в', 'цифра', 'бес', 'друг']
-
+  
 def search(str, dictionary)
     m = []
-    i = 0
+    copy_str = String.new(str)
 
-    while i < dictionary.length
-        str.scan(dictionary[i]).each do |substring|
-            m.push(substring)
-        end    
-        i += 1    
+    find = lambda do |str, world|
+        if str.slice!(world) == nil
+            # do nothing
+        else
+            m << world
+            find.call(str,world)
+        end
     end
+    
+    dictionary.each do |word|
+        find.call(str, word)
+    end
+    
     puts "Строку можно представить #{m.join(' ').inspect} ?"
-    m.join().length == str.length
-end
+
+    m.join().length == copy_str.length
+end    
+
+str = 'двадесяткадва'
+dictionary = ['два', 'дв', 'ва', 'десятка', 'тысячи']
+puts "Строка: '#{str}'"
+puts "Словарь: #{dictionary}"
+puts search(str, dictionary)
+puts "-----------"
+puts "\n"
 
 str = 'двадесяткадва'
 dictionary = ['два', 'десятка', 'тысячи']
